@@ -17,6 +17,29 @@ const Login: React.FC = () => {
     setIsLoading(true);
 
     try {
+      // Test user hardcoded for development
+      if (email === 'test@example.com' && password === 'test123') {
+        const testBusiness = {
+          _id: 'test-business-id',
+          name: 'Test Business',
+          email: 'test@example.com',
+          industry: 'Technology',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        };
+        
+        localStorage.setItem('token', 'test-token-123');
+        localStorage.setItem('business', JSON.stringify(testBusiness));
+        
+        toast({
+          title: "Login successful",
+          description: `Welcome back, ${testBusiness.name}!`,
+        });
+        
+        navigate('/dashboard');
+        return;
+      }
+
       const response = await authApi.login({ email, password });
       
       if (response.data.success) {
